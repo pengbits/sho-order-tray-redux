@@ -1,0 +1,180 @@
+// styles for the `additional-providers` card
+// https://issues.sho.com/browse/SITE-15784
+// later repurposed for the `showtime-app` direct card
+// https://issues.sho.com/browse/SITE-16124
+
+.order-card__provider-set {
+  // padding-top: $size-m;
+}
+
+.order-card__provider-entry {
+
+  @include from-order-tray-sidebar-visible {
+    border-bottom: $colors-light-grey solid 1px;
+  }
+
+  &__body {
+    position: relative;
+    padding: $size-s 0;
+    min-height: 40px;
+  }
+
+  &:last-child .order-card__provider-entry__body {
+    border-bottom: none;
+  }
+
+  &__details {
+    padding: $size-s 0;
+    clear: both;
+    // display: none;
+  }
+
+  &__logo,
+  &__free-trial-callout,
+  &__provider-lead {
+    display: block;
+  }
+
+  &__logo img.order-card__logo  {
+    margin-bottom: 0;
+  }
+
+  &__free-trial-callout {
+    // margin-top: 0;
+    margin-bottom: $size-m;
+    min-width: 140px;
+    color: $colors-mid-grey !important;
+    @include upcase;
+
+  }
+  // &__free-trial-callout {
+    // @include header('epsilon');
+    // @include upcase;
+    // margin-top: $size-m;
+  // }
+
+  &__provider-lead {
+    @include round-button;
+    @include button--solid($colors-red);
+    height:$size-s;
+    @include until-small   {
+      line-height: $size-s;
+    }
+  }
+
+  // these only makes sense for mobile since desktop seprators adhere to padding
+  & + .order-card__divider {
+    @include from-order-tray-sidebar-visible {
+      display: none
+    }
+  }
+
+  @include from-small {
+    &__provider-lead {
+      padding-top: $size-xs;
+      padding-bottom: ($size-s + ($size-xxs * 2));
+      min-width: 250px
+    }
+  }
+
+  @include at-medium {
+    &__provider-lead,
+    &__cta {
+      clear: both;
+    }
+  }
+
+
+  @include until-large {
+    &--no-free-trial &__free-trial-callout {
+      display: none;
+    }
+  }
+
+  @include from-large {
+    &__body {
+      @include clearfix;
+    }
+
+    &__logo {
+      margin-right: $size-m
+    }
+
+    &__logo,
+    &__free-trial-callout {
+      float: left;
+    }
+
+  }
+
+  @include at-large {
+    &__free-trial-callout {
+      margin-right: 400px;
+    }
+    &__provider-lead {
+      margin-top: 25px;
+      //outline: purple solid 2px;
+    }
+  }
+
+  @include from-extra-large {
+    &__provider-lead,
+    &__cta {
+      float: right;
+    }
+
+    &__provider-lead {
+      margin-top: 9px;
+    }
+
+    &__cta {
+      position: absolute;
+      top:$size-s;
+      right:0;
+    }
+
+    &__free-trial-callout {
+      margin-top: $size-m;
+    }
+
+  }
+
+} // END &__provider-entry
+
+// this doesn't appear to be in use for showtime app/#555555,
+// but additional providers/#777777 could expand the entries inline
+.order-card__provider-entry__details {
+  display: none;
+
+  .order-card__provider-entry--expanded & {
+    display: block;
+  }
+}
+
+.order-card--with-provider-set {
+  .order-card__headline {
+    @include from-medium {
+      margin-top:$size-s;
+      @include header('delta');
+      color: $colors-pure-black
+    }
+  }
+
+  // custom styles for samsung smart TVs
+  .order-card__provider-entry[data-provider-id="888888"] {
+    .order-card__provider-entry__logo {
+      padding-right: 90px; // samsung logo is not as wide as others, make up that difference
+    }
+    .order-card__provider-entry__cta {
+      @include header('delta');
+      color: $colors-pure-black !important;
+      text-transform: uppercase;
+
+      @include from-medium {
+        @include header('epsilon');
+        margin-top: $size-m;
+      }
+
+    }
+  }
+}

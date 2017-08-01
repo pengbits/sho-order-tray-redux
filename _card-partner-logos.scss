@@ -1,0 +1,83 @@
+// Partner is admitedly not a great name, but need something to handle the case where Cable is a 'provider' in the tray,
+// but contains numberous Provider logos as content
+$order-card-partner-logo-width: 125px;
+$order-card-partner-logo-height: 75px;
+$order-card-partner-logo-margin:  5px;
+$order-card-partner-logo-width-mobile: 95px;
+$order-card-partner-logo-height-mobile: 57px;
+
+.order-card__partner-logos {
+  @include unstyled-ul;
+  @include clearfix;
+  padding: $size-l 0;
+  display: none;
+  
+  @include from-order-tray-sidebar-visible-or-when-selected {
+    display: block;
+  }
+}
+
+.order-card__partner-logo {
+  // box is 125x75 w/ 5px margin
+  &,
+  a,
+  span {
+    display: block;
+    float: left;
+  }
+  
+  a,
+  span {
+    @include hide-text;    
+    margin-right:  $order-card-partner-logo-margin;
+    margin-bottom: $order-card-partner-logo-margin;
+    width:$order-card-partner-logo-width-mobile;
+    height:$order-card-partner-logo-height-mobile;
+    border:$colors-light-grey solid $size-border-width-m;
+    border-radius: $size-border-radius;
+    background-repeat: no-repeat;
+    background-size: contain;
+    
+    margin-right:  $order-card-partner-logo-margin;
+    margin-bottom: $order-card-partner-logo-margin;
+    
+    @include from-order-tray-sidebar-visible {
+      width:$order-card-partner-logo-width;
+      height:$order-card-partner-logo-height;
+    }
+  }
+  
+  a:hover,
+  a:active {
+    border-color: $colors-dark-grey;
+  }
+}
+
+$logo-path: "#{$assets-image-base}/order/tray/cable-logos-2x";
+$order-card-partner-logos : (
+  "att"               :"#{$logo-path}/att.png",
+  "brighthouse"       :"#{$logo-path}/brighthouse.png",
+  "charter-spectrum"  :"#{$logo-path}/charter-spectrum.png",
+  "cox"               :"#{$logo-path}/cox.png",
+  "directv"           :"#{$logo-path}/directv.png",
+  "dish"              :"#{$logo-path}/dish.png",
+  "mediacom"          :"#{$logo-path}/mediacom.png",
+  "optimum"           :"#{$logo-path}/optimum.png",
+  "suddenlink"        :"#{$logo-path}/suddenlink.png",
+  "timewarner"        :"#{$logo-path}/timewarner.png",
+  "verizon"           :"#{$logo-path}/verizon.png",
+  "xfinity"           :"#{$logo-path}/xfinity.png",
+  "samsung-smart-tv"  :"#{$logo-path}/samsung-smart-tv-white.png"
+);
+
+
+@each $partner-key, $logo in $order-card-partner-logos {
+  .order-card__partner-logo--#{$partner-key} {
+    a, 
+    span {
+      background-image: url($logo);
+    }
+  }
+}
+
+

@@ -1,0 +1,58 @@
+
+.order-picker {
+  
+  &__provider-list {
+    @include unstyled-ul;
+    margin-bottom: $size-m;
+    
+    @include from-medium-tall {
+      margin-bottom: $size-l;
+    }
+    
+    .order-tray--two-col & {
+      float:left;
+      width:50%;
+    }
+  }
+  
+
+  &__control {
+    display: block;
+    @include header('epsilon');
+    margin-bottom: 2px;
+  
+    @include at-medium-tall {
+      margin-bottom: 4px;
+    }
+    
+    @include from-medium-tall {
+      margin-bottom: 6px
+    }
+  }
+
+  &__control-group {
+    clear:both;
+    @include clearfix;
+  }
+
+  &__control--select-all,
+  &__control--close {
+    @include upcase;
+    @include header('zeta');
+    display: inline-block;
+    cursor: pointer;
+    padding-bottom: 0;
+    float:left;
+  }
+
+  &__control--close {
+    padding-right: 0;
+    text-align: right;
+    float: right;
+    color: $colors-dark-red;
+  }
+}
+
+.order-tray--chameleon .order-tray__close-button-summer-sixteen {
+  display: none;
+}

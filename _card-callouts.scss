@@ -1,0 +1,113 @@
+// note faq callouts removed for launch, if adding those back, 
+// look in git history near a045d2b368f75afe9711fbaeb3fb908b1de1d7f2
+
+.order-card {
+
+  &__free-trial-callout {
+    display: none;
+    
+    @include from-order-tray-sidebar-visible-or-when-selected {
+      display: block;
+    }
+  }
+
+  &__big-button-container {
+    display: none;
+    
+    @include from-order-tray-sidebar-visible-or-when-selected {
+      display: inline-block;
+    }
+  }
+  
+  &__free-trial-callout {
+    @include header--epsilon;
+    @include upcase;
+    color: $colors-red;
+    margin-bottom: $size-l;
+      
+    @include from-order-tray-sidebar-visible {
+      position: absolute;
+      top: $size-xl + $size-m;
+      right: $size-xl;
+      margin: 0;
+    }
+  }
+  
+  &__price-callout {
+    @include header('delta');
+  }
+  // need to split this selector up in order for extra-long line-height to survive across media queries
+  
+  &__price-callout {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    margin-top: $size-m;
+    margin-bottom: $size-xl;
+    border-radius: $size-xxl;
+    background-color: $colors-red;
+    color:$colors-pure-white;
+    line-height: $size-xxl;
+    text-align: center;
+    @include size($size-xxl);
+
+    em, b {
+      display: block;
+      position: absolute;
+      left:  -#{$size-m}; 
+      right: -#{$size-m};
+      font-style: normal;
+      font-weight: normal;
+    }
+
+    // per month
+    em {
+      bottom: -#{$size-m};
+      font-size: 10px;
+    }
+    
+    // after free trial, OR
+    b, 
+    &__this-or-that {
+      padding-top: $size-m;
+      font-size:12px;
+      line-height: 12px;
+      color:$colors-mid-grey;
+      top: $size-xxl;
+    }
+  }
+  
+  // twin price callouts:
+  // for playstation vue, two price callouts are stacked vertically on top of each other
+  // they're floated to the left of the price blurb
+  &__price-callout-container--multiple {
+    padding-bottom: $size-l;
+    padding-top: $size-l;
+    text-align: center;
+  }
+  
+  &__price-callout-container--multiple &__price-callout {
+    display: block;
+    margin-top: 0;
+
+    &:last-child {
+      margin-top: $size-xl + $size-m;
+    }
+  }
+  
+  &__price-description {
+    @extend %clearfix
+  }
+    
+  @include from-medium {
+    
+    &__price-callout-container {
+      @include span-columns(2);
+    }
+
+    &__blurb--price {
+      @include span-columns(10);
+    }
+  }
+  
+}

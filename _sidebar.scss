@@ -1,0 +1,20 @@
+.order-tray__sidebar {
+  border-top-right-radius: $size-border-radius-m;
+  border-bottom-right-radius: $size-border-radius-m;
+  background-color: $colors-light-red;
+  padding: $size-xl;
+  min-width: 260px;
+
+  &-headline {
+    // even if the sidebar exapands in size slightly, this will prevent
+    // the text from wrapping differently between states
+    max-width: calc(24vw - ($size-xl * 2));
+    @include header--gamma;
+    @include upcase;
+    margin-bottom: $size-m;
+
+    @include from-medium-tall {
+      margin-bottom: $size-l
+    }
+  }
+}

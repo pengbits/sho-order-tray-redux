@@ -1,0 +1,22 @@
+let Settings = {};
+Settings.ease                     = Power2.easeInOut;
+// Settings.fade_up_delay            = 0.125;
+// Settings.fade_down_delay          = Settings.fade_up_delay;
+// Settings.focus_duration           = 0.25;
+Settings.legal_fade_up_duration   = 0.5;
+Settings.legal_fade_down_duration = 0;
+Settings.legal_delay              = 0.45;
+Settings.wipe_open_delay          = 0;
+Settings.wipe_closed_delay        = 0.25;
+Settings.expand_collapse_duration = 0.25;
+// Settings.scroll_content_duration  = 0.25;
+// Settings.card_padding             = 20;
+Settings.card_hidden_scale        = 0.85;
+Settings.shim_animation_duration  = 0.5;
+Settings.card_fade_up_duration    = 0.5;
+Settings.card_fade_down_duration  = 0.25;
+Settings.card_margin_top          = 15;
+Settings.sidebar_percent_of_stage = 0.25;
+// Settings.card_padding             = 40;
+// 
+export default Settings;

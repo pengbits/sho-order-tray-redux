@@ -1,0 +1,173 @@
+// details aka learn more in the order card make use of html5 `details` and `summary` elements,
+// which have native toggling behavior but will need to be shimmed in IE
+
+// heights for collapsed and expanded state of details
+// this would be 0 for the collapsed state but it needs to be the height of header--epsilon + padding-top,
+// not a value we can easily get from this context unfortunately
+$order-details-height-collapsed: 33px;
+$order-details-height-collapsed-medium: 50px;
+$order-details-height-expanded: auto;
+
+.order-card {
+
+  &__details {
+   display: none;
+   
+   // refactor doesn't use classname toggling for expand/collapse,
+   // when we retire the old version we can remove these display none/block rules alltogether
+   .order-tray--redux & {
+     display: block;
+   }
+  }
+
+  &__divider {
+    display: block;
+    height: 0;
+    margin-top: $size-l;
+    clear: both;
+
+    &--top {
+      @include from-order-tray-sidebar-visible {
+        margin-top:$size-m;
+        height: $size-l;
+      }
+    }
+
+    &:before {
+      @include shim('', $colors-light-grey);
+      left: 0;
+      right:0;
+      height: 1px;
+    }
+  }
+
+
+  &__details-toggle {
+    display: inline-block;
+    position: relative;
+    @include upcase;
+    padding: $size-m;
+    padding-right: 0;
+    padding-left: map-get($icon-sizes, 'small') + $size-s;
+    cursor: pointer;
+    color: $colors-pure-black;
+
+    @include until-order-tray-sidebar-visible {
+      padding-bottom: 0;
+    }
+
+    &:before {
+      @include shim('');
+      @include size(map-get($icon-sizes, 'small'));
+      left:0;
+      top:$size-m + 2;
+      @include icon('triangle-right-black');
+    }
+  }
+
+  &__details-toggle.order-card__details-toggle--active {
+    &:before {
+      @include icon('down');
+    }
+  }
+
+  &__details-toggle--close {
+    &:before {
+      @include icon('up');
+    }
+  }
+
+  // for SITE-15348 a/b test of exposed prices
+  &__sticky-price {
+    position: relative;
+    display: inline-block;
+    padding-top: $size-m;
+    color: $colors-mid-grey;
+
+    @include from-small {
+      padding-left: $size-m;
+      float: right;
+    }
+
+    @include until-order-tray-sidebar-visible {
+      padding-bottom: 0;
+      display: none;
+
+      .order-card--selected & {
+        display: inline-block;
+      }
+    }
+  }
+
+  &__details {
+    // display: none;
+    overflow: hidden;
+    clear: both;
+  }
+
+  &__details--expanded {
+    overflow: visible; // allow price callouts to peek out of container
+    // display: block;
+  }
+
+  &__device-list {
+    @include clearfix;
+    padding-top: $size-m;
+
+    ul {
+      @include unstyled-ul;
+      float:left;
+      margin-right: $size-m;
+      width:200px;
+      color: $colors-mid-grey;
+    }
+  }
+
+  &__blurb {
+    // assuming this markup might come in the form of wysiwg edited html from PCE so avoiding classnames
+    // Update: this turned out not to be the case, feel free to refactor into more class-based structures
+    padding-top: $size-m; // was 40 before adding second details toggle
+    padding-bottom: $size-l;
+
+    h4 {
+      @include header--delta;
+      color: $colors-pure-black;
+    }
+
+    h5 {
+      @include header--epsilon;
+      color: $colors-mid-grey;
+    }
+  }
+
+  &__blurb--price {
+    // see callouts.scss
+  }
+
+  &__blurb--description {
+    padding-top: 10px;
+  }
+
+  &__blurb--devices {
+    padding-top: $size-xl;
+    //padding-bottom: 0;
+  }
+}
+
+// on mobile, the details toggles only make sense for selected cards
+@include until-order-tray-sidebar-visible {
+  .order-card__divider,
+  .order-card__details-toggle {
+    display: none;
+  }
+
+  .order-card--selected {
+    .order-card__divider {
+      display: block;
+    }
+
+    .order-card__details-toggle {
+      display: inline-block;
+    }
+  }
+}

@@ -1,0 +1,79 @@
+
+  .order-card {
+    &__body {
+      @include clearfix;
+    }
+    
+    &__description {  
+      padding-right: $size-m;
+      padding-bottom: $size-m;
+      width: 88%;
+      color:$colors-mid-grey;
+      
+      @include from-order-tray-sidebar-visible {
+        padding-bottom:0
+      }
+      
+      &__hotline {
+        color: $colors-light-red;
+        font-weight: normal;
+      }
+      
+      // hulu card added a link to the description with SITE-14752
+      a:link, 
+      a:visited {
+        text-decoration: underline;
+      }
+      
+      a:hover, 
+      a:active {
+        text-decoration: none;
+      }
+    }
+
+    &__device-icons {
+      display: none; 
+      margin-bottom: $size-m;
+      
+
+      @include from-order-tray-sidebar-visible-or-when-selected {
+        display: inline-block;
+      }
+
+      img {
+        position: relative;
+        top: -4px;
+        margin-right: $size-s;
+        @include from-large {
+          position: relative;
+          margin-top: $size-l;
+        }
+        
+        &:first-child:not(.device-icon--mobile) {
+          top: 0;
+        }
+      }
+    }
+
+    &__big-button-container {
+      margin-right:$size-xxl;
+      margin-bottom: $size-xs;
+      
+      @include from-small {
+        float: right;
+        margin-top: 0;
+      }
+
+      @include from-large {
+        margin: $size-l 0 $size-m 0;
+      }
+    }
+    
+    &__big-button {
+      width: 100%;
+      @include from-order-tray-sidebar-visible {
+        white-space: nowrap;
+        width: auto;
+      }
+    }
+  }

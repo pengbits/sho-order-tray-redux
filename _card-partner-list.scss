@@ -1,0 +1,29 @@
+// Partner is admitedly not a great name, but need something to handle the case where Cable is a 'provider' in the tray,
+// but contains numberous Provider logos as content
+.partner-list {
+  margin: 0;
+  @include unstyled-ul;
+  
+  &__divider {
+    @include header('delta');
+    margin-top: $size-xl;
+    margin-bottom: $size-s;
+    color: $colors-pure-black;
+    border-bottom: $colors-dark-red solid $size-border-width-s;
+  }
+  
+  &__link {
+    @include header('epsilon');
+    display: inline-block;
+    padding: $size-xs 0;
+    color: $colors-mid-grey;
+  }
+}
+  
+.partner-list-header {
+  @include header('delta');
+  @include upcase;
+  padding-top: $size-xl;
+  color:$colors-pure-black;
+}
+

@@ -1,0 +1,33 @@
+// apply the styles when order-tray changes from stacked cards to overlay with sidebar - currently this is at small
+@mixin from-order-tray-sidebar-visible {
+  @include mq($from:'large') {
+    @content;
+  }
+}
+
+// apply styles only up until point where order-tray changes to overlay with sidebar
+// for example, the details toggles only make sense for selected cards when in the mobile context..
+@mixin until-order-tray-sidebar-visible {
+  @include mq($until:'large') {
+    @content;
+  }
+}
+// apply the styles when order-tray changes from stacked cards to overlay with sidebar OR IF the card is selected
+@mixin from-order-tray-sidebar-visible-or-when-selected {
+  @include from-order-tray-sidebar-visible {
+    @content;
+  }
+  .order-card--selected & {
+    @content;
+  }
+}
+
+// apply the styles when order-tray changes from stacked cards to overlay with sidebar AND the card is selected
+@mixin from-order-tray-sidebar-visible-and-selected {
+  .order-card--selected & {
+    @include from-order-tray-sidebar-visible {
+      @content;
+    }
+  }
+}
+

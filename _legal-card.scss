@@ -1,0 +1,24 @@
+.order-tray__legal-card {
+  @include header--zeta;
+  margin: 0;
+  padding: $size-m;
+  border-radius: $size-border-radius-m;
+  background-color: $colors-other-grey;
+  color: $colors-pure-white;
+  
+  p {
+    margin-bottom: $size-m;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  @include from-order-tray-sidebar-visible {
+    opacity: 0;
+    padding: $size-xl;  
+  }
+}
+
+.order-tray--redux .order-tray__legal-card {
+  opacity: 1
+}

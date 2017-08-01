@@ -1,0 +1,170 @@
+// render the psuedo-content needed for the rounded 'edge of card' effect into the end of each card
+@mixin order-card__corner-shim {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  height:$size-xs;
+  width:50%;
+  content:'';
+  background-color: $colors-pure-white;
+
+  @include from-order-tray-sidebar-visible {
+    display: none;
+  }
+
+  .order-card--selected &,
+  .order-card--last & {
+    display: none;
+  }
+}
+
+// in refactor, cards are housed in extra container element, because 
+// React won't allow iterating without a wrapper, so we're applying a margin here
+// to keep bottom card colliding with legal. this was previously handled 
+// with the last card, and limited to desktop, but it should be on mobile as well.
+.order-tray__order-card-collection {
+  margin-bottom: $size-s;
+}
+
+.order-tray__legal-card-collection {}
+
+// rules for the card container and rounded corners
+.order-card {
+  margin:0;
+  @include body-text;
+  position: relative;
+  padding: $size-m;
+  padding-bottom: $size-l;
+  overflow: hidden;
+  box-sizing: content-box; // this alleviates 'pop' at end of tween
+  
+  background-size:      $size-m + $size-xs;
+  background-color:     $colors-pure-white;
+  background-repeat:    repeat-x;
+  background-image:     url("#{$assets-image-base}/order/tray/faux-shadow-border_40x40.png");
+  background-position:  bottom;
+  
+  @include from-order-tray-sidebar-visible {
+    background-image: none;
+  }
+
+  &__inner {
+    &:after {
+      @include order-card__corner-shim;
+      left:0;
+      border-top-left-radius: $size-border-radius-m;
+    }
+    &:before {
+      @include order-card__corner-shim;
+      right:0;
+      border-top-right-radius: $size-border-radius-m;
+    }
+  }
+
+  // micro-variants for handling rounded corner joins
+  // first and last refer only to first/last in relation to another selected card,
+  // so in this sense it's possible to have multiple 'firsts'
+  &--last,
+  &--selected {
+    background-image: none;
+    padding-bottom: $size-m;
+    border-radius: $size-border-radius-m;
+  }
+
+  &--first {
+    padding-top: $size-l;
+    border-top-left-radius:  $size-border-radius-m;
+    border-top-right-radius: $size-border-radius-m;
+  }
+
+  &--last {
+    border-top-left-radius:  0;
+    border-top-right-radius: 0;
+  }
+
+  // selected cards, and cards that have been 'orphaned' by being sandwiched between two selected cards..
+  &--last.order-card--first,
+  &--selected {
+    border-radius: $size-border-radius-m;
+  }
+
+  &--selected {
+    margin-top:$size-s;
+    margin-bottom: $size-s;
+  
+    // don't apply margin-top to the card that is literally first in the stack,
+    // because the header has its own margin-bottom.
+    .order-tray__masthead + &, 
+    .order-tray__body-content > div > &:first-child {
+      margin-top: 0;
+    }
+    // (the second selector is for the refactored react component)
+  }
+  
+  
+  
+  
+  @include from-order-tray-sidebar-visible {
+    margin:0 0 $size-s 0;
+    margin-bottom: $size-l;
+    padding: $size-xl;
+    box-shadow: none;
+    border-radius: $size-xs;
+
+
+    &,
+    &:last-child {
+      // don't need padding at bottom with addition of learn-more content
+      padding-bottom: 0;
+    }
+
+  }
+
+  &__logo {
+    width:auto;
+    height:$size-xl;
+
+    @include from-order-tray-sidebar-visible-or-when-selected {
+      margin-bottom: $size-s;
+
+    }
+  }
+
+  &__logo-fallback {
+    @include header--beta;
+    @include upcase;
+  }
+
+  &__header {
+    @include display(flex);
+  }
+
+  &__headline {
+    @include header--gamma;
+  }
+
+  &__toggle {
+    @include display(flex);
+  }
+
+  &,
+  &__headline,
+  &__logo-fallback {
+    color: $colors-pure-black;
+  }
+
+  &__headline,
+  &__description,
+  &__provider-set,
+  &__blurb {  
+    display: none;
+    
+    @include from-order-tray-sidebar-visible-or-when-selected {
+        display: block;
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

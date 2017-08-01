@@ -1,0 +1,205 @@
+$order-tray-sidebar-width           : 25%; 
+$order-tray-body-width              : 75%;
+$order-tray-sidebar-width--two-col  : 35%;
+$order-tray-body-width--two-col     : 65%;
+$order-tray-closer-size             : map-get($icon-sizes, 'medium');
+// see _order-masthead.scss for these values
+// $order-tray-top-offset              : 80px;
+// $order-tray-top-offset--medium-tall : 100px;
+
+@mixin order-tray-mask {
+  background: $colors-pure-black;
+  @include  from-order-tray-sidebar-visible {
+    background: rgba(0,0,0,0.75);
+  }
+  z-index: 99999;  
+}
+
+.order-tray {
+  position: relative;
+}
+
+.order-tray--chameleon {
+  padding:$size-m;
+  
+  @include at-medium {
+    padding-left: 0;
+    padding-right: 0;  
+  }
+  
+  @include from-medium {
+    @include full-width-container-inner-at-medium;
+  }
+  
+  @include from-large {
+    border: 0;
+  }
+
+  @include from-order-tray-sidebar-visible {
+    @include order-tray-mask;
+    padding: 0;
+    position: fixed;
+    top:0; //$order-tray-top-offset;
+    left:0;
+    right:$order-tray-body-width;
+    
+    &.order-tray--two-col {
+      right:$order-tray-body-width--two-col;
+    }
+
+    &.order-tray--stage-open {
+      bottom:0;
+    }
+  }
+}
+
+.order-tray--overlay {
+  @include order-tray-mask;
+  position: fixed;  
+  left:0;
+  right: 0;
+  top:0;
+  bottom:0;
+  padding: $size-m;
+  
+  @include from-order-tray-sidebar-visible {
+    padding: 0
+  }
+}
+
+.order-tray__sidebar {
+  display: none;
+
+  @include from-order-tray-sidebar-visible {
+    display: block;
+    position: absolute;
+    left: 0;
+    right:$order-tray-body-width;
+    top:$order-tray-top-offset;
+    @include from-medium-tall {
+      top:$order-tray-top-offset--medium-tall;
+    }
+    
+    .order-tray--two-col & {
+      right: $order-tray-body-width--two-col;
+    }
+    .order-tray--chameleon & {
+      position:fixed;
+    }
+  }
+}
+
+// see order-masthead.scss - we're using the same styles as the in-page logo and header,
+// overlaying it exactly on top, when the in-page version is hidden
+.order-tray__masthead__logo {
+  @extend .order-masthead__logo;
+  display: none;
+
+  .order-tray--overlay &,
+  .order-tray--chameleon.order-tray--stage-open & {
+    @include from-order-tray-sidebar-visible {
+      display: block;
+    }
+  }
+}
+
+.order-tray__body {
+  @include body-text;
+  @include from-order-tray-sidebar-visible {
+    padding-left: $order-tray-sidebar-width;
+    
+    .order-tray--two-col & {
+      padding-left: $order-tray-sidebar-width--two-col;
+    }
+  }
+}
+
+.order-tray__body-content {
+  height:auto;
+  
+  @include from-order-tray-sidebar-visible {
+    padding: 0 $size-l 0 $size-l;
+  }
+  
+  .order-tray--overlay &,
+  .order-tray--chameleon.order-tray--stage-open & {
+    padding-top: $size-m;
+    height: 100vh;
+    overflow-y: scroll; 
+  }
+  
+  .order-tray--chameleon.order-tray--stage-open & {
+    padding-top: $order-tray-top-offset;
+    
+    @include from-medium-tall {
+      padding-top: $order-tray-top-offset--medium-tall;
+    }
+  }
+}
+
+.order-tray__closer {
+  display: none;
+  position: absolute;
+  top:$size-m;
+  right:0;
+  @include size($order-tray-closer-size);
+  cursor:pointer;
+
+  &:before {
+    top:   $size-m;
+    right: $size-m;
+    @include shim;
+    @include size($order-tray-closer-size);
+    @include icon('close','medium');
+  }
+}
+
+@include until-order-tray-sidebar-visible {
+  .order-tray--overlay .order-tray__closer {
+    display: block;
+  }
+}
+
+.order-tray__body-headline {
+  @include header--beta;
+  @include upcase;
+  padding: $size-s ($size-xs + $order-tray-closer-size) $size-xs $size-xs;
+
+  @include from-order-tray-sidebar-visible {
+    display: none;
+  }
+}
+
+.order-tray__subscriber-callout {
+  @include header--delta;
+  @include upcase;
+  margin-bottom: $size-m;
+}
+
+// ugly hack:
+// shim body content slightly to ensure it can be scrolled
+.order-tray--overlay .order-tray__overflow,
+.order-tray--chameleon.order-tray--stage-open  {
+  @include until-order-tray-sidebar-visible {
+    height: 175px; 
+  }
+}
+
+html.order-tray-active {
+  overflow: hidden;
+  
+  // prevent background scrolling on mobile...
+  // http://stackoverflow.com/questions/19060301/how-to-prevent-background-scrolling-when-bootstrap-3-modal-open-on-mobile-browse
+  @include until-order-tray-sidebar-visible {
+    position:fixed;
+    width: 100%;
+  }
+  
+  //.. and on landscape tablets (SITE-14138)
+  &.order-tray-active--has-touch-events {
+    position: fixed;
+    width: 100%;
+  }
+}
+
+ 
