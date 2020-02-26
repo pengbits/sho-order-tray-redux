@@ -1,7 +1,5 @@
 import * as d from './details';
 const reducer = d.details;
-import * as p from './providers';
-import rootReducer from './index';
 
 describe('Order Tray Redux', () => {
 	describe('Redux', () => {
@@ -13,18 +11,8 @@ describe('Order Tray Redux', () => {
 				const state = reducer({}, action)
 				expect(state).toEqual({94:395})
 			})
-			
-			test('setting details height should not disrupt card expansion', () => {
-				const action1 = p.toggleProviderExpanded({id:92})
-				const state1 	= rootReducer({}, action1)
-				const action2 = d.setDetailsHeight({
-					id: 92, height:600
-				})
-				const state2 	= rootReducer(state1, action2)
-				expect(state2.providers.expanding).toEqual([92])
-			})
     })
-		
+    
 		describe('details.GET_DETAILS_HEIGHT', () => {
       test('should be able to read height back out after storing', () => {
 				const action = d.setDetailsHeight({
@@ -36,6 +24,6 @@ describe('Order Tray Redux', () => {
 				expect(state2).toEqual({92:435})
 			})
     })
-	
+    
 	})
 })

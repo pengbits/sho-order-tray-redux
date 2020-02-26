@@ -4,11 +4,13 @@ import TransitionGroup from 'react-transition-group/TransitionGroup';
 import $ from 'jquery'
 import LegalCard from '../components/LegalCard'
 
+const WRAPPER_CLASS = 'order-tray__legal-card-collection'
 
 class LegalCardCollection extends Component {
-  
-  //componentWillUpdate(nextProps, nextState) {
-  //}
+
+  static get className(){ 
+    return WRAPPER_CLASS 
+  }
   
   render(){
     const {
@@ -19,33 +21,34 @@ class LegalCardCollection extends Component {
     
     // check for animate={false} option
     const disableAnimation = (animate !== undefined && !animate)
-    return this.renderLegal()
-    // if(isMobile) {
-    // } else if (disableAnimation){
-    //   return this.renderLegal()
-    // } else {
-    //   return this.renderLegalWithMotion()
-    // }
+
+    if(isMobile) {
+      return this.renderLegal(legal)
+    } else if (disableAnimation){
+      return this.renderLegal(legal)
+    } else {
+      return this.renderLegalWithMotion(legal)
+    }
   }
   
-  // renderLegalWithMotion(){ 
-    // return (<div className='order-tray__legal-card-collection'>
-      // {this.props.legal.map((card,i) => {
-        // return this.renderCard(card,i)
-      // })}
-    // </div>)  
-  // }
-  
-  renderLegal(){ 
-    return (<div className='order-tray__legal-card-collection'>
-      {this.props.legal.map((card,i) => {
+  renderLegalWithMotion(legal){ 
+    return (<TransitionGroup component='div' className={LegalCardCollection.className}>
+      {legal.map((card,i) => {
         return this.renderCard(card,i)
+      })}
+    </TransitionGroup>)  
+  }
+  
+  renderLegal(legal){ 
+    return (<div className={LegalCardCollection.className}>
+      {legal.map((card,i) => {
+        return this.renderCard(card,i,{opacity:1})
       })}
     </div>)  
   }
   
   renderCard(card,idx,style={}){
-    return <LegalCard key={idx} {...card} />
+    return <LegalCard key={idx} {...card} {...style}/>
   }  
 }
 

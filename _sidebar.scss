@@ -18,3 +18,14 @@
     }
   }
 }
+
+.order-picker__provider__logo {
+  height: 23px;
+}
+
+// styles for Direct Prioritized A/B test SITE-18141
+.order-tray__sidebar {
+  &--direct-prioritized &-headline {
+    @include header('epsilon');
+  }
+}

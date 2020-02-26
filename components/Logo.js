@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import $ from 'jquery'
 
-export default ({path,name,onTouchTap,isSelected,isMobile}) => {
+export default ({path,name,onClick,isSelected,isMobile}) => {
   
   const wrapper = (content) => {
     if(isMobile){ 
       return (
-        <div onTouchTap={onTouchTap} className="order-card__toggle" data-track="" data-label="open card">
+        <div onClick={onClick} className="order-card__toggle">
           {content}
         </div>)
     } else { 

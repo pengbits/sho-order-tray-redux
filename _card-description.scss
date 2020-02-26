@@ -18,8 +18,10 @@
         color: $colors-light-red;
         font-weight: normal;
       }
-      
-      // hulu card added a link to the description with SITE-14752
+    }
+    
+    &__description,
+    &__blurb--description {
       a:link, 
       a:visited {
         text-decoration: underline;

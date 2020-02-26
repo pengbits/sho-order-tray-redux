@@ -1,6 +1,6 @@
 ---
-name: Order Tray Redux
-collection: components
+name: Order Tray (overlay)
+collection: order
 ---
 
 # Order Tray Redux

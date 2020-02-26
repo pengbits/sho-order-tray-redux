@@ -51,8 +51,35 @@
     float: right;
     color: $colors-dark-red;
   }
-}
-
-.order-tray--chameleon .order-tray__close-button-summer-sixteen {
-  display: none;
+  
+  // SITE-17441	groups variation
+  &__provider-group-button {
+    display: block;
+    margin-bottom: $size-s;
+    padding: $size-m;
+    width: 100%;
+    background-color: transparent;
+    border: $colors-pure-white solid 1px;
+    @include header('epsilon');
+    @include upcase;
+    text-align: left;
+    border-radius: $size-xs;
+    
+    &,
+    &:focus {
+      outline: none
+    }
+    
+    &--selected {
+      background-color: $colors-pure-white;
+      color:$colors-dark-red
+    }
+    
+  }
+  
+  &__provider-group__subcopy {
+    @include header('zeta');
+    display: block;
+    padding: 0 $size-m $size-l $size-m;
+  }
 }

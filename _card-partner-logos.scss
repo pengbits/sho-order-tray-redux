@@ -53,21 +53,27 @@ $order-card-partner-logo-height-mobile: 57px;
   }
 }
 
-$logo-path: "#{$assets-image-base}/order/tray/cable-logos-2x";
+// this map was deprecated with refactored implementation in TOOL-4103
+// to make logos editable outside css layer/outside release,
+// the image-path is now inlined in the js layer  
+
+$logo-path:     "#{$assets-image-base-new}/order/tray/cable-logos-2x";
+$logo-path-svg: "#{$icon-base-path}/provider-logos"; 
+
 $order-card-partner-logos : (
-  "att"               :"#{$logo-path}/att.png",
-  "brighthouse"       :"#{$logo-path}/brighthouse.png",
-  "charter-spectrum"  :"#{$logo-path}/charter-spectrum.png",
-  "cox"               :"#{$logo-path}/cox.png",
-  "directv"           :"#{$logo-path}/directv.png",
-  "dish"              :"#{$logo-path}/dish.png",
-  "mediacom"          :"#{$logo-path}/mediacom.png",
-  "optimum"           :"#{$logo-path}/optimum.png",
-  "suddenlink"        :"#{$logo-path}/suddenlink.png",
-  "timewarner"        :"#{$logo-path}/timewarner.png",
-  "verizon"           :"#{$logo-path}/verizon.png",
-  "xfinity"           :"#{$logo-path}/xfinity.png",
-  "samsung-smart-tv"  :"#{$logo-path}/samsung-smart-tv-white.png"
+  // "6"            :"#{$logo-path}/6.png",
+  // "25"           :"#{$logo-path}/cox.png",
+  // "26"           :"#{$logo-path}/directv.png",
+  // "28"           :"#{$logo-path}/dish.png",
+  // "122"          :"#{$logo-path}/frontier-communications.png",
+  // "45"           :"#{$logo-path}/mediacom.png",
+  // "18"           :"#{$logo-path}/optimum.png",
+  // "61"           :"#{$logo-path}/suddenlink.png",
+  // "66"           :"#{$logo-path}/verizon2.png",
+  // "23"           :"#{$logo-path}/xfinity.png",
+  // "120"          :"#{$logo-path}/spectrum2.png",
+  "132"  :"#{$logo-path}/lg.svg",
+  "106"  :"#{$logo-path}/samsung-smart-tv.svg"
 );
 
 

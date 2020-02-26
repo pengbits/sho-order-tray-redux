@@ -9,17 +9,7 @@ $order-details-height-collapsed-medium: 50px;
 $order-details-height-expanded: auto;
 
 .order-card {
-
-  &__details {
-   display: none;
-   
-   // refactor doesn't use classname toggling for expand/collapse,
-   // when we retire the old version we can remove these display none/block rules alltogether
-   .order-tray--redux & {
-     display: block;
-   }
-  }
-
+  
   &__divider {
     display: block;
     height: 0;
@@ -100,27 +90,12 @@ $order-details-height-expanded: auto;
   }
 
   &__details {
-    // display: none;
     overflow: hidden;
     clear: both;
   }
 
   &__details--expanded {
     overflow: visible; // allow price callouts to peek out of container
-    // display: block;
-  }
-
-  &__device-list {
-    @include clearfix;
-    padding-top: $size-m;
-
-    ul {
-      @include unstyled-ul;
-      float:left;
-      margin-right: $size-m;
-      width:200px;
-      color: $colors-mid-grey;
-    }
   }
 
   &__blurb {
@@ -150,7 +125,38 @@ $order-details-height-expanded: auto;
 
   &__blurb--devices {
     padding-top: $size-xl;
-    //padding-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  &__devices {
+    @include clearfix;
+    padding-top: $size-m;
+  }
+
+  &__device-group  {
+    margin-bottom: $size-m;
+
+    @include from-small {
+      float:left;
+      margin-bottom: 0;
+      width: 50%;
+    }
+    
+    &:last-child {
+      margin-top: $size-m
+    }
+    
+    // this is in conflict with blurb > h5 above
+    & > &__heading {
+      @include header('epsilon');
+      text-transform: uppercase;
+      color: $colors-pure-black; 
+    }
+    
+    &__list {
+      @include unstyled-ul;
+      color: $colors-mid-grey;
+    }
   }
 }
 

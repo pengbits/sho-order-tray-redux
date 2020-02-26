@@ -28,16 +28,18 @@ class Factory {
   }
   
   onOpenTray(e){
-    return this.instance(e)
+    if(!/^providers\/group/.test(e.details)){ // SITE-17476 groups test
+      return this.instance(e)
+    }
   }
   
   instance(cfg){
     if(!this._instance){
-      console.log(`|factory| create new instance`)
+      // console.log(`|factory| create new instance`)
       this._instance = new OrderTray(cfg);
     } 
     else {
-      console.log(`|factory| todo: need to configure existing instance`)
+      // console.log(`|factory| todo: need to configure existing instance`)
       // this._instance.controller.init(cfg) 
     }
     
@@ -46,12 +48,10 @@ class Factory {
   
   destroy(instance){
     console.log(`|factory| destroy() called`)
-    if(this._instance == instance){
-      this._instance = null;
-
+    if(instance.props.el === this._instance.props.children.props.el){
+      this._instance = null
       HashChange.close();
-    }
-    else{
+    } else {
       throw new Error(`trying to destroy order tray, but there is somehow more than one instance`)
     }
   }

@@ -1,14 +1,17 @@
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import enquire from 'enquire.js'
 import { IS_MOBILE_MEDIA_QUERY, environmentChanged } from '../redux/environment' 
 import { WithVariations } from './VariationContainer'
-import { loadProviders } from '../redux/providers'
-import { destroy} from '../redux/app'
+import { unselectAllProviders } from '../redux/providers'
+import { destroy } from '../redux/app'
 import WithChameleonSupport from './OrderTrayWithChameleonContainer'
 import OrderTre from '../components/OrderTray'
 
 const mapStateToProps = (state, ownProps) => {
   const {environment,app,display} = state;
+  const {isMobile,isDesktop} = environment;
+
   const {
     providers,
     selected,
@@ -20,15 +23,15 @@ const mapStateToProps = (state, ownProps) => {
     groupSizes,
     displayOrder,
     sortedProviders,
-    legal
+    legal,
+    useColumns,
+    loading
   } = state.providers
-  const headlineText = 'How do you want to get Showtime?'
   
   return {
     appStatus: app.status,
-    isMobile: environment.isMobile,
-    isDesktop: environment.isDesktop,
-    headlineText,
+    isMobile,
+    isDesktop,
     providers,
     selected,
     isUnselectingIndex,
@@ -39,7 +42,9 @@ const mapStateToProps = (state, ownProps) => {
     displayOrder,
     sortedProviders,
     legal,
-    display
+    display,
+    useColumns,
+    loading
   }  
 }
 
@@ -61,22 +66,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       })
     },
     
-    setVariationListeners(){
-      
-    },
-    
     setDocumentAttributes(attrs){
       console.log(`setDocumentAttributes ${JSON.stringify(attrs)}`)
     },
     
-    loadProviders: (data) => {
-      dispatch(loadProviders(data))
-    },
-    
     destroy: () => {
       dispatch(destroy())
+    },
+
+    collapse: () => {
+      dispatch(push('')) // this calls unselectAllProviders indirectly
+    },
+
+    unselectAllProviders: () => {
+      dispatch(unselectAllProviders())
     }
-    
   }
 }
 

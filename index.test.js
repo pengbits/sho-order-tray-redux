@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import PickerProvider from './components/PickerProvider'
+import PickerProviderListItem from './components/PickerProviderListItem'
 import LegalCard from './components/LegalCard'
 
 describe('Order Tray Redux', () => {
@@ -16,11 +16,13 @@ describe('Order Tray Redux', () => {
 		})
 		
 		describe('Picker', () => {
-			
-			describe('PickerProvider', () => {
-				
+			// these shallow render tests were failing 
+			// when the variation mixin was still in place -
+			// if we we need to restore that functionality,
+		 // consider just removing the tests 
+			describe('PickerProviderListItem', () => {
 				const shallowRenderComponent = ({isSelected}={}) => {
-					return shallow(<PickerProvider 
+					return shallow(<PickerProviderListItem 
 						groupId={92}
 						isSelected={!!isSelected}
 						groupName='Apple' 

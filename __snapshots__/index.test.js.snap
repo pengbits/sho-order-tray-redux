@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Order Tray Redux Components Picker PickerProvider matches snapshot 1`] = `
+exports[`Order Tray Redux Components Picker PickerProviderListItem matches snapshot 1`] = `
 <li
   className="order-picker__provider order-picker__control"
+  data-context="order tray"
 >
   <span
     className="input input--faux-radio"
@@ -12,7 +13,7 @@ exports[`Order Tray Redux Components Picker PickerProvider matches snapshot 1`] 
   >
     <img
       className="input__icon"
-      src="http://www.sho.com/www/sho/lib/assets/svg/super-radio_36x36.svg"
+      src="https://www.sho.com/www/sho/lib/assets/svg/super-radio_36x36.svg"
     />
     Apple
   </span>

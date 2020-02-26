@@ -39,18 +39,17 @@ const Callout = ({children}) => {
   </span>);
 }
 
-const Blurb = ({children}) => {
-  return (
-  <div className="order-card__blurb order-card__blurb--price">
-    <h4>Get full access to SHOWTIME whenever you want –<br />all commercial-free</h4>
-    <h5>Stream award-winning series like Homeland, Billions, Ray Donovan, Shameless and The Affair the moment they air. PLUS, you'll be able to watch exclusive movies, documentaries, sports, comedy specials and much more. Whether you watch LIVE TV or ON DEMAND you never have to miss a single thing.</h5>
+const Blurb = ({priceBlurbHeadline,priceBlurb}) => {
+  return (<div className="order-card__blurb order-card__blurb--price">
+    <h4 dangerouslySetInnerHTML={{ __html : priceBlurbHeadline }} />
+    <h5 dangerouslySetInnerHTML={{ __html : priceBlurb     }} />
   </div>
   )
 }
   
 const CalloutSeperatorHTML = `<span class="order-card__price-callout__this-or-that">OR</span>`;
 
-const PriceWithMultipleCallouts = ({callouts}) => {
+const PriceWithMultipleCallouts = ({callouts, priceBlurb, priceBlurbHeadline}) => {
   return (<div className="order-card__price-description">
     <CalloutContainer modifier='order-card__price-callout-container--multiple'>
       {callouts.map((calloutHTML,i) => {
@@ -59,13 +58,16 @@ const PriceWithMultipleCallouts = ({callouts}) => {
         </Callout>
       })}
     </CalloutContainer>
-    <Blurb />
+    <Blurb 
+      priceBlurb={priceBlurb} 
+      priceBlurbHeadline={priceBlurbHeadline}
+    />
   </div>)
 }
 
-const Price = ({calloutHTML}) => {
+const Price = ({calloutHTML,priceBlurb,priceBlurbHeadline}) => {
   if(typeof calloutHTML !== 'string' && calloutHTML.length > 1) {
-    return PriceWithMultipleCallouts({callouts: calloutHTML})
+    return PriceWithMultipleCallouts({callouts: calloutHTML, priceBlurb, priceBlurbHeadline})
   }
   
   return (<div className="order-card__price-description">
@@ -74,8 +76,10 @@ const Price = ({calloutHTML}) => {
         {calloutHTML}
       </Callout>
     </CalloutContainer>
-    <Blurb />
-  
+    {<Blurb 
+      priceBlurb={priceBlurb} 
+      priceBlurbHeadline={priceBlurbHeadline}
+    />}
   </div>)
 }
 

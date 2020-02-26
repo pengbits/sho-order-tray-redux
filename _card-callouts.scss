@@ -3,7 +3,8 @@
 
 .order-card {
 
-  &__free-trial-callout {
+  &__free-trial-callout,
+  &__price-and-trial-callout {
     display: none;
     
     @include from-order-tray-sidebar-visible-or-when-selected {
@@ -13,6 +14,7 @@
 
   &__big-button-container {
     display: none;
+    
     
     @include from-order-tray-sidebar-visible-or-when-selected {
       display: inline-block;
@@ -31,6 +33,17 @@
       right: $size-xl;
       margin: 0;
     }
+
+    &--long {
+      @include from-order-tray-sidebar-visible {
+        @include at-large {
+          position: relative;
+          top: auto;
+          right: auto;
+          margin-bottom: $size-s;
+        }
+      }
+    }
   }
   
   &__price-callout {
@@ -43,7 +56,7 @@
     position: relative;
     vertical-align: top;
     margin-top: $size-m;
-    margin-bottom: $size-xl;
+    margin-bottom: $size-l;
     border-radius: $size-xxl;
     background-color: $colors-red;
     color:$colors-pure-white;
@@ -70,10 +83,17 @@
     b, 
     &__this-or-that {
       padding-top: $size-m;
-      font-size:12px;
+      font-size: 12px;
       line-height: 12px;
-      color:$colors-mid-grey;
+      color: $colors-mid-grey;
       top: $size-xxl;
+
+      @include until-large {
+        width: 250px;
+        top: $size-l;
+        left: $size-xxl + $size-m;
+        text-align: left;
+      }
     }
   }
   
@@ -96,10 +116,10 @@
   }
   
   &__price-description {
-    @extend %clearfix
+    @extend %clearfix;
   }
     
-  @include from-medium {
+  @include from-large {
     
     &__price-callout-container {
       @include span-columns(2);
@@ -109,5 +129,4 @@
       @include span-columns(10);
     }
   }
-  
 }

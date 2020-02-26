@@ -12,7 +12,7 @@ $order-tray-closer-size             : map-get($icon-sizes, 'medium');
   @include  from-order-tray-sidebar-visible {
     background: rgba(0,0,0,0.75);
   }
-  z-index: 99999;  
+  z-index: 200;  
 }
 
 .order-tray {
@@ -20,7 +20,7 @@ $order-tray-closer-size             : map-get($icon-sizes, 'medium');
 }
 
 .order-tray--chameleon {
-  padding:$size-m;
+  padding:$size-m $size-m $size-m * 2 $size-m;
   
   @include at-medium {
     padding-left: 0;
@@ -32,7 +32,7 @@ $order-tray-closer-size             : map-get($icon-sizes, 'medium');
   }
   
   @include from-large {
-    border: 0;
+    border: 0;     
   }
 
   @include from-order-tray-sidebar-visible {
@@ -41,6 +41,7 @@ $order-tray-closer-size             : map-get($icon-sizes, 'medium');
     position: fixed;
     top:0; //$order-tray-top-offset;
     left:0;
+    height: 0; //when cards are not open, 
     right:$order-tray-body-width;
     
     &.order-tray--two-col {
@@ -49,6 +50,7 @@ $order-tray-closer-size             : map-get($icon-sizes, 'medium');
 
     &.order-tray--stage-open {
       bottom:0;
+      height: 100%;
     }
   }
 }
@@ -64,6 +66,13 @@ $order-tray-closer-size             : map-get($icon-sizes, 'medium');
   
   @include from-order-tray-sidebar-visible {
     padding: 0
+  }
+}
+
+.order-tray--overlay.order-tray--loading {
+  &:before {
+    content: '';
+    @extend .loading-animation;
   }
 }
 
@@ -90,18 +99,27 @@ $order-tray-closer-size             : map-get($icon-sizes, 'medium');
 }
 
 // see order-masthead.scss - we're using the same styles as the in-page logo and header,
-// overlaying it exactly on top, when the in-page version is hidden
+// overlaying it exactly on top, when the in-page version is hidden:
+// 1) on mobile, hide the logo entirely
+// 2) on desktop, in overlay version, show the logo
+// 3) on desktop, in chameleon version, show the logo 
+// 4) unless of course the page has been scrolled enough to collide with the global footer
 .order-tray__masthead__logo {
   @extend .order-masthead__logo;
-  display: none;
-
-  .order-tray--overlay &,
-  .order-tray--chameleon.order-tray--stage-open & {
-    @include from-order-tray-sidebar-visible {
+  display: none; // 1
+  
+  @include from-order-tray-sidebar-visible {
+    .order-tray-active .order-tray--overlay &, // 2
+    .order-tray--chameleon & { // 3
       display: block;
+    }
+    
+    .order-tray-footer-collision & { // 4
+      display: none;
     }
   }
 }
+
 
 .order-tray__body {
   @include body-text;
@@ -116,6 +134,7 @@ $order-tray-closer-size             : map-get($icon-sizes, 'medium');
 
 .order-tray__body-content {
   height:auto;
+  position: relative;
   
   @include from-order-tray-sidebar-visible {
     padding: 0 $size-l 0 $size-l;

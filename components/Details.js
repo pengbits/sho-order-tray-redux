@@ -7,48 +7,56 @@ import Price from './Price';
 import PartnerList from './PartnerList';
 import Devices from './Devices';
 import Divider from './Divider';
-import * as DISPLAY from '../redux/display'
 
-class Details extends Component {
-  
+export class Details extends Component {
+
   // called by ExpandableCollapsibleComponent hoc
   onSetHeight(height){
     const {id,setDetailsHeight} = this.props
     setDetailsHeight(id, height)
   }
-  
+
   render(style){
     const {
-      key, 
+      key,
       name,
       id,
       isTVProvider,
       isSmartTVProvider,
+      tvProvidersAlpha,
       isExpanded,
       isExpanding,
       devicesBlurbHeadline,
       devicesBlurb,
+      priceBlurbHeadline,
+      priceBlurb,
       hasDevicesList,
       priceCallout,
-      isMobile
+      isMobile,
+      parent
     } = this.props;
-    
- 
-    // console.log(`dts#render ${id} ${JSON.stringify({isExpanding,isExpanded})}`)
 
+
+    // console.log(`dts#render ${id} ${JSON.stringify({isExpanding,isExpanded})}`)
+    // console.log(`|details| priceBlurbHeadline: ${priceBlurbHeadline} priceBlurb: ${priceBlurb}`)
+    const height = style && style.height !== undefined ? `${style.height}px` : 'auto';
     return (
       <div className='order-card__details'
-        style={{height: style && style.height !== undefined ? `${style.height}px` : 'auto' }}  
+        style={{height}}
       >
         <Divider top={true} />
-        
+
         {priceCallout &&
-          <Price calloutHTML={priceCallout} />}
-        
-        {priceCallout && 
+          <Price
+            calloutHTML={priceCallout}
+            priceBlurbHeadline={priceBlurbHeadline}
+            priceBlurb={priceBlurb}
+          />}
+
+        {priceCallout &&
           <Divider />}
-            
-        {!!devicesBlurb && !!devicesBlurbHeadline && 
+
+        {!!devicesBlurb && !!devicesBlurbHeadline &&
           <Devices>
             <Devices.Headline>
               {devicesBlurbHeadline}
@@ -56,16 +64,16 @@ class Details extends Component {
             <Devices.Blurb>
               {devicesBlurb}
             </Devices.Blurb>
-            {!!hasDevicesList && 
+            {!!hasDevicesList &&
               <Devices.List />}
           </Devices>}
-        
-        {isTVProvider && !isSmartTVProvider && 
-          <PartnerList />}
-            
+
+        {isTVProvider && !isSmartTVProvider &&
+          <PartnerList tvProvidersAlpha={tvProvidersAlpha} />}
+
         <Divider />
-        <DetailsToggle 
-          text="Close" 
+        <DetailsToggle
+          text="Close"
           modifierClassName="order-card__details-toggle--close"
           onToggle={this.onToggleClick.bind(this)}
           isMobile={isMobile}>
@@ -73,61 +81,31 @@ class Details extends Component {
       </div>
     )
   }
-  
+
   onToggleClick(e){
     e.preventDefault()
     const {toggleProviderExpanded} = this.props;
     const el = e.currentTarget;
-    const id = $(el).parents('.order-card').data('providerId');
+    const id = this.getParentElement(el).data('providerId');
     toggleProviderExpanded(id)
   }
-  
+
+  getParentElement(el){
+    const parentSelector = this.props.parentSelector || '.order-card'
+    return $(el).parents(parentSelector)
+  }
+
   onWillCollapse(el){
     el.removeClass('order-card__details--expanded')
   }
-  
+
   onMotionComplete(el){
     const {isExpanded,isMobile} = this.props
     if(isExpanded){
       el.addClass('order-card__details--expanded')
-    } else {
-      if(isMobile) this.scrollToProvider(el)
-    }    
-  }
-  
-  scrollToProvider(el){
-    const lastScroll   = this.getScrollElement().scrollTop();
-    const headerHeight = this.getHeaderHeight();
-    const card         = el.parents('.order-card')
-    const offset       = (this.props.display == DISPLAY.MODES.OVERLAY) ?
-      (card.position().top - headerHeight + lastScroll)
-      :
-      (card.offset().top - 10)
-      ;    
-    this.scrollContentTo(offset)
-  }
-  
-  getHeaderHeight(){
-    if(!this.headerHeight){
-      let headerHeight = $('.order-tray__body-headline').outerHeight();
-      let bodyTop = Number((this.getScrollElement().css('padding-top') || '').replace('px',''));
-      this.headerHeight = headerHeight + bodyTop;
+    } else if (isMobile) {
+      this.props.collection.scrollToProvider(el);
     }
-    return this.headerHeight;
-  }
-  
-  // scroll order-tray__body-content (desktop) or body element (mobile) to desired offset
-  scrollContentTo(scrollTop){
-    this.getScrollElement().animate({'scrollTop': scrollTop}, 250);
-  }
-  
-  getScrollElement(){
-    // return the correct element to scroll based on display mode
-    // note that this is only ever called in mobile context 
-    return (this.props.display == DISPLAY.MODES.OVERLAY) ? 
-      $('.order-tray__body-content') : 
-      $('body')
-    ;
   }
 }
 
