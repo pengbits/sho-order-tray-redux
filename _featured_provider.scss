@@ -1,0 +1,117 @@
+// styles for Direct Prioritized A/B test SITE-18141
+// 1) on mobile, the callout is styled to look like a card,
+// and placed above the list of providers
+// 2) on desktop, it's a button in the sidebar
+.order-tray__provider-callout {
+  
+  &__headline {
+    @include header('beta');
+    @include upcase;
+    margin-bottom: $size-l;
+    color: $colors-pure-black;
+  }
+  
+  &__icon {
+    position: relative;
+    top: $size-xs;
+    margin-right: $size-s;
+    @include size(map-get($icon-sizes, 'large') + $size-xs)
+  }
+  
+  &__subcopy {
+    @include header('epsilon');
+    font-weight: 600;
+    color: $colors-pure-black;
+  }
+  
+  &__description {
+    @include header('epsilon');
+    margin-bottom: $size-l;
+    color: $colors-mid-grey;
+  }
+  
+  &__provider-lead {
+    @include round-button;
+    @include button--solid($colors-light-red);
+    margin-bottom: $size-m;
+  }
+  
+
+  &--mobile {
+    padding: $size-m;
+    margin-bottom: $size-xl;
+    background-color: $colors-pure-white;
+    
+    @include from-order-tray-sidebar-visible {
+      display: none
+    }
+  }
+  
+  &--mobile {
+    .order-tray--overlay & {
+      margin-top: ($order-tray-closer-size + ($size-m * 2));
+    }
+  }
+  
+  &__details  {
+    overflow: hidden;
+    color: $colors-pure-black;
+      
+    .order-card__details {
+      position: relative;
+    }
+  }
+  
+  @include from-order-tray-sidebar-visible {
+    &__subcopy {
+      margin-bottom: $size-xl
+    } 
+    
+    &__icon,
+    &__details,
+    &__description,
+    & > .order-card__details-toggle {
+      display: none
+    }
+  }
+  
+  &--desktop &__headline {
+    margin-bottom: $size-s;
+  }
+  
+  &--desktop &__headline,
+  &--desktop &__subcopy {
+    color: $colors-pure-white
+  }
+  
+  &--desktop &__provider-lead {
+    @include button--solid($colors-pure-white);
+    color: $colors-light-red;
+    margin-bottom: $size-xl;
+  }
+}
+
+
+
+@include until-order-tray-sidebar-visible {
+  // overlay needs some special scroll mojo...
+  .order-tray--with-featured-provider {
+    .order-tray__body {
+      overflow-y: scroll;
+      height: 100vh
+    }
+    .order-tray__body-content {
+      height: auto;
+    }
+    
+    .order-tray__body-headline {
+      @include header('gamma');
+    }
+  }
+  // ... but chameleon does not
+  &.order-tray--chameleon {
+    .order-tray__body {
+      height: auto;
+    }
+  }
+}
